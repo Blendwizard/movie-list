@@ -5,11 +5,13 @@ import MovieListItem from './MovieListItem.jsx';
 
 
 const MovieList = (props) => (
-  <ul>
-    {props.movies.map(singleMovie =>
-      <MovieListItem movie={singleMovie}/>
-      )}
-  </ul>
+  <div>
+    <ul>
+      {props.movies.map(singleMovie =>
+        <MovieListItem movie={singleMovie}/>
+        )}
+    </ul>
+  </div>
 );
 
 
