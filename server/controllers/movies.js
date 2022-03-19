@@ -29,8 +29,17 @@ module.exports = {
     });
   },
 
-  post: function() {
-    console.log("Posting this from the POST controller for movies");
+  post: function(req, res) {
+    console.log("MOVIE TITLE:::::", req.body.title);
+    var movieToAdd = req.body.title;
+
+    models.movies.addMovie(movieToAdd, (err, success) => {
+      if (err) {
+        res.status(404).send(err);
+      } else {
+        res.status(201).send(success);
+      }
+    });
   }
 
 

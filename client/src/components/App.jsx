@@ -68,8 +68,16 @@ class App extends React.Component {
 
   // Adds a movie title to our list
   addMovieToList(title) {
-    this.setState({currentMovies: [...this.state.currentMovies].concat({title:title})})
-    // console.log(this.state.currentMovies)
+    // this.setState({currentMovies: [...this.state.currentMovies].concat({title:title})})
+    var movieBody = { title };
+    // console.log(JSON.stringify(movieBody));
+
+    fetch('http://localhost:3000/api/movies/',
+      {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(movieBody)
+      })
 
   }
 

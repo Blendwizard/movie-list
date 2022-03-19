@@ -9,7 +9,7 @@ router.get('/movies', controller.movies.get);
 router.get('/movies/search', controller.movies.search);
 
 // Adds a movie into our database via POST
-
+router.post('/movies', controller.movies.post);
 
 
 // Export router
