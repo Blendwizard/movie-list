@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from './Search.jsx';
-import movies from '/client/src/data.js';
+// import movies from '/client/src/data.js';
 import MovieList from './MovieList.jsx';
 import AddMovie from './AddMovie.jsx';
 import WatchTabs from './WatchTabs.jsx'
@@ -13,33 +13,43 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      currentMovies: movies,
+      currentMovies: [],
       filteredMovies: [],
       title: '',
     };
   }
 
-  // Used when switching to 'unwatched' Tab
+  componentDidMount() {
+    fetch('http://localhost:3000/api/movies')
+    .then(res=>res.json())
+    .then(
+      (movies) => {
+        this.setState({
+          currentMovies: movies
+        })
+      }
+    )
+  }
+
+  // Used when switching to 'unwatched' tab (**Should refactor to toggle between tabs instead**)
   switchToUnwatched() {
-    this.setState({currentMovies: movies});
-    setTimeout(() => {
+    this.setState({currentMovies: this.state.currentMovies}, () => {
       var unwatchedMovies = this.state.currentMovies.filter(function(movie) {
         return movie.watched === false;
       })
       this.setState({currentMovies: unwatchedMovies});
+    });
 
-    }, 10)
   }
 
-
+// Used to switch to 'watched' tab
   switchToWatched() {
-    this.setState({currentMovies: movies});
-    setTimeout(() => {
+    this.setState({currentMovies: this.state.currentMovies}, () => {
       var watchedMovies = this.state.currentMovies.filter(function(movie) {
         return movie.watched === true;
       })
       this.setState({currentMovies: watchedMovies});
-    }, 10)
+    });
   }
 
 
@@ -47,7 +57,7 @@ class App extends React.Component {
   // Adds a movie title to our list
   addMovieToList(title) {
     this.setState({currentMovies: [...this.state.currentMovies].concat({title:title})})
-    console.log(this.state.currentMovies)
+    // console.log(this.state.currentMovies)
 
   }
 
@@ -58,6 +68,9 @@ class App extends React.Component {
     })
     this.setState({filteredMovies: filtered})
   }
+
+
+
 
   // Renders all components on page
   render() {
