@@ -11,6 +11,11 @@ router.get('/movies/search', controller.movies.search);
 // Adds a movie into our database via POST
 router.post('/movies', controller.movies.post);
 
+// PATCH route that toggles a movies 'watched' status
+router.patch('/movies/:movie_id', controller.movies.patch)
+
+
+
 
 // Export router
 module.exports = router;

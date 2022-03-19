@@ -33,6 +33,7 @@ class App extends React.Component {
   }
 
 
+  //:::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::
 
   // Create GET request for onSubmit of Search
   searchMovie(query) {
@@ -55,7 +56,7 @@ class App extends React.Component {
     });
   }
 
-// Used to switch to 'watched' tab
+  // Used to switch to 'watched' tab
   switchToWatched() {
     this.setState({currentMovies: this.state.allMovies}, () => {
       var watchedMovies = this.state.currentMovies.filter(function(movie) {
@@ -68,7 +69,6 @@ class App extends React.Component {
 
   // Adds a movie title to our list
   addMovieToList(title) {
-    // this.setState({currentMovies: [...this.state.currentMovies].concat({title:title})})
     var movieBody = { title };
     // console.log(JSON.stringify(movieBody));
 
@@ -78,6 +78,8 @@ class App extends React.Component {
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(movieBody)
       })
+
+    this.setState({currentMovies: [...this.state.currentMovies].concat({title:title})})
 
   }
 
@@ -90,16 +92,37 @@ class App extends React.Component {
   }
 
 
+  // Toggles a movies individual 'watched' status
+  toggleStatus(movie_id, movie, watchedStatus) {
+    // console.log(movie_id, movie);
+    // Not currently making use of movie variable
+    // Backend is up, now I need to change the state here to reflect the change
+    var movieTitle = {movie};
+    var watchStatus = {watchedStatus};
+    console.log("MOVIE TITLE", movieTitle , "STATUS::", watchStatus);
+
+    fetch(`http://localhost:3000/api/movies/${movie_id}`,
+    {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(watchStatus)
+    })
+
+  }
+
+
+  // ::::: RENDER :::::::
 
   // Renders all components on page
   render() {
+
     return (
-      <div>
+      <div >
         <h1>Movie List</h1>
         <div><AddMovie addMovieToList={this.addMovieToList.bind(this)}/></div>
         <div><SearchBar filterMovies={this.filterMovies.bind(this)} searchMovie={this.searchMovie.bind(this)}/></div>
         <div><WatchTabs switchToUnwatched={this.switchToUnwatched.bind(this)} switchToWatched={this.switchToWatched.bind(this)}/> </div>
-        <div><MovieList movies={this.state.filteredMovies.length > 0 ? this.state.filteredMovies : this.state.currentMovies}/></div>
+        <div><MovieList movies={this.state.filteredMovies.length > 0 ? this.state.filteredMovies : this.state.currentMovies} toggleStatus={this.toggleStatus.bind(this)}/></div>
       </div>
     )
   }

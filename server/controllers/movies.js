@@ -30,7 +30,7 @@ module.exports = {
   },
 
   post: function(req, res) {
-    console.log("MOVIE TITLE:::::", req.body.title);
+    // console.log("MOVIE TITLE:::::", req.body.title);
     var movieToAdd = req.body.title;
 
     models.movies.addMovie(movieToAdd, (err, success) => {
@@ -40,6 +40,23 @@ module.exports = {
         res.status(201).send(success);
       }
     });
+  },
+
+  patch: function(req, res) {
+    // console.log("Made it to patch function");
+
+    var watchStatus = req.body.watchedStatus;
+    var movie_id = req.params.movie_id;
+
+
+    models.movies.toggleWatchStatus(movie_id, watchStatus, (err, success) => {
+      if (err) {
+        res.status(404).send(err);
+      } else {
+        res.status(201).send(success);
+      }
+    });
+
   }
 
 

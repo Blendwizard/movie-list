@@ -1,3 +1,37 @@
 body {
   font-family: sans-serif, arial;
+  background-color: #2478A8;
+}
+
+h1 {
+  width: 150px;
+  height: 42px;
+  width:auto ;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 36px;
+
+  color: rgba(255, 255, 255, 0.46);
+}
+
+#app {
+  position: absolute;
+  width: 629px;
+  height: 982px;
+  left: 441px;
+  top: 0px;
+  background: #2E4377;
+}
+
+
+.watch-btn {
+  border-radius: 30px;
+}
+
+li {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
 }

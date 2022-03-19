@@ -43,6 +43,28 @@ module.exports = {
       }
     });
 
+  },
+
+  toggleWatchStatus(movie_id, watchStatus, callback) {
+    // console.log(`Toggled watch status at DB: movieID = ${movie_id}`);
+    var toggleTo;
+
+    if (watchStatus === 'y') {
+      toggleTo = 'n';
+    } else {
+      toggleTo = 'y';
+    }
+
+    var query = 'UPDATE movies_table SET watched = ? WHERE id = ?';
+    var queryArgs = [toggleTo, movie_id];
+    db.connection.query(query, queryArgs, (err, success) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, success);
+      }
+    });
+
   }
 
 };
