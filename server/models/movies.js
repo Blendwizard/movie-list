@@ -19,5 +19,18 @@ module.exports = {
         callback(null, results);
       }
     });
+  },
+
+  searchMovies(search, callback) {
+
+    var query = `SELECT * FROM movies_table WHERE title = '${search}'`;
+    db.connection.query(query, (err, searchResults) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, searchResults)
+      }
+    });
   }
-}
+
+};

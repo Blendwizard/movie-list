@@ -11,7 +11,20 @@ module.exports = {
         res.status(404).send(err);
       } else {
         // Currently, we're just logging our returned movies to the console
-        console.log(res.status(200).send(movies));
+        res.status(200).send(movies);
+      }
+    });
+  },
+
+
+  search: function(req, res) {
+
+    var searchTerm = req.query.term;
+    models.movies.searchMovies(searchTerm, (err, results) => {
+      if (err) {
+        res.status(404).send(err);
+      } else {
+        res.status(200).send(results);
       }
     });
   },

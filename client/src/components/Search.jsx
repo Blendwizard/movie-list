@@ -14,13 +14,15 @@ class SearchBar extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("submit handled", event.target.value)
+    // console.log("submit handled", event.target.query.value);
+    this.props.searchMovie(event.target.query.value);
+
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Search..." onChange={this.handleChange.bind(this)} />
+      <form onSubmit={this.handleSubmit.bind(this)}>
+        <input type="text" name="query" placeholder="Search..." onChange={this.handleChange.bind(this)} />
         <input type="submit" value="Go!"/>
       </form>
     )
