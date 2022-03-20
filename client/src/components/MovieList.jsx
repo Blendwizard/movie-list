@@ -8,7 +8,7 @@ const MovieList = (props) => (
   <div>
     <ul>
       {props.movies.map(singleMovie =>
-        <MovieListItem movie={singleMovie} toggleStatus={props.toggleStatus}/>
+        <MovieListItem key = {Math.random()} movie={singleMovie} toggleStatus={props.toggleStatus}/>
         )}
     </ul>
   </div>

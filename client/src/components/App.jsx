@@ -33,7 +33,21 @@ class App extends React.Component {
   }
 
 
+
   //:::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::
+
+  fetchMovies() {
+    fetch('http://localhost:3000/api/movies')
+    .then(res=>res.json())
+    .then(
+      (movies) => {
+        this.setState({
+          allMovies: movies,
+          currentMovies: movies
+        })
+      }
+    )
+  }
 
   // Create GET request for onSubmit of Search
   searchMovie(query) {
@@ -80,6 +94,7 @@ class App extends React.Component {
       })
 
     this.setState({currentMovies: [...this.state.currentMovies].concat({title:title})})
+    this.fetchMovies();
 
   }
 
@@ -99,7 +114,7 @@ class App extends React.Component {
     // Backend is up, now I need to change the state here to reflect the change
     var movieTitle = {movie};
     var watchStatus = {watchedStatus};
-    console.log("MOVIE TITLE", movieTitle , "STATUS::", watchStatus);
+    // console.log("MOVIE TITLE", movieTitle , "STATUS::", watchStatus);
 
     fetch(`http://localhost:3000/api/movies/${movie_id}`,
     {
@@ -107,6 +122,7 @@ class App extends React.Component {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(watchStatus)
     })
+    .then(this.fetchMovies());
 
   }
 
